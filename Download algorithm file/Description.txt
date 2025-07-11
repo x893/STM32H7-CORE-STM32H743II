@@ -1,0 +1,1 @@
+First copy the H743IIT6_16M.FLM file into the keil\ARM\Flash folder, and then add it in the project settings, otherwise the external Flash cannot be burned. In addition, the Size of RAM for Algorithm needs to be changed from 0x00008000 to 0x0000F000. If it is too small, the download will fail.
