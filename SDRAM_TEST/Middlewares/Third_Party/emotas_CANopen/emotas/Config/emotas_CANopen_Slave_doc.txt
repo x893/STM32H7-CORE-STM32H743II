@@ -1,0 +1,1025 @@
+CANopen Object Dictionary Documenation for emotas_CANopen_Slave
+
+
+Index:       0x1000 - Device Type
+DataType:    UNSIGNED32
+ObjectCode:  Variable
+Description: This objects contains the CANopen device type of the device.
+  Sub:          0x00 - Device Type
+  DataType:     UNSIGNED32
+  DefaultValue: 0
+  AccessType:   ro
+  PDOMapping:   0
+
+Index:       0x1001 - Error Register
+DataType:    UNSIGNED8
+ObjectCode:  Variable
+Description: This object contains a register of 8 error information bits.
+  Sub:          0x00 - Error Register
+  DataType:     UNSIGNED8
+  DefaultValue: 0
+  AccessType:   ro
+  PDOMapping:   4
+
+Index:       0x1005 - COB ID SYNC
+DataType:    UNSIGNED32
+ObjectCode:  Variable
+Description: This object shall indicate the configured COB-ID of the synchronization object (SYNC). Further, it defines whether the CANopen device generates the SYNC.
+  Sub:          0x00 - COB ID SYNC
+  DataType:     UNSIGNED32
+  DefaultValue: 0x00000080
+  AccessType:   rw
+  PDOMapping:   0
+
+Index:       0x1006 - Communication Cycle Period
+DataType:    UNSIGNED32
+ObjectCode:  Variable
+Description: This object shall provide the communication cycle period. This period defines the SYNC interval.
+
+The value shall be given in multiple of 탎. If the value is set to 0x00000000  the transmission of SYNC messages shall be disabled. By changing the value from 0x00000000 and the synchronous counter overflow value is greater than 0 the first SYNC message shall start with the counter value reset to 1.
+
+The transmission of SYNC messages shall start within one communication cycle period as given by the value after it is set to the new value.
+
+  Sub:          0x00 - Communication Cycle Period
+  DataType:     UNSIGNED32
+  DefaultValue: 100000
+  AccessType:   rw
+  PDOMapping:   0
+
+Index:       0x1007 - Synchronous Window Length
+DataType:    UNSIGNED32
+ObjectCode:  Variable
+Description: This object shall indicate the configured the length of the time window for synchronous PDOs. 
+
+If the synchronous window length expires all synchronous TPDOs may be discarded and an EMCY message may be transmitted; all synchronous RPDOs may be discarded until the next SYNC message is received. Synchronous RPDO processing is resumed with the next SYNC message.
+
+  Sub:          0x00 - Synchronous Window Length
+  DataType:     UNSIGNED32
+  DefaultValue: 0
+  AccessType:   rw
+  PDOMapping:   0
+
+Index:       0x1014 - COB ID EMCY
+DataType:    UNSIGNED32
+ObjectCode:  Variable
+Description: This object shall indicate the configured COB-ID for the EMCY write service.
+
+  Sub:          0x00 - COB ID EMCY
+  DataType:     UNSIGNED32
+  DefaultValue: $NODEID+0x80
+  AccessType:   rw
+  PDOMapping:   0
+
+Index:       0x1015 - Inhibit Time Emergency
+DataType:    UNSIGNED16
+ObjectCode:  Variable
+Description: This object shall indicate the configured inhibit time for the EMCY message. The value shall be given in multiples of 100 탎. The value 0 shall disable the inhibit time.
+
+  Sub:          0x00 - Inhibit Time Emergency
+  DataType:     UNSIGNED16
+  DefaultValue: 0
+  AccessType:   rw
+  PDOMapping:   0
+
+Index:       0x1016 - Consumer Heartbeat Time
+DataType:    UNSIGNED32
+ObjectCode:  Array
+  Sub:          0x00 - Highest sub-index supported
+  DataType:     UNSIGNED8
+  DefaultValue: 3
+  AccessType:   const
+  PDOMapping:   0
+  Sub:          0x01 - Consumer Heartbeat Time 1
+  DataType:     UNSIGNED32
+  DefaultValue: 0x10000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x02 - Consumer Heartbeat Time 2
+  DataType:     UNSIGNED32
+  DefaultValue: 0x20000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x03 - Consumer Heartbeat Time 3
+  DataType:     UNSIGNED32
+  DefaultValue: 0x30000
+  AccessType:   rw
+  PDOMapping:   0
+
+Index:       0x1017 - Producer Heartbeat Time
+DataType:    UNSIGNED16
+ObjectCode:  Variable
+Description: The producer heartbeat time shall indicate the configured cycle time of the heartbeat produced by the device.
+
+The value shall be given in multiples of 1 ms. The value 0 shall disable the producer heartbeat.
+
+  Sub:          0x00 - Producer Heartbeat Time
+  DataType:     UNSIGNED16
+  DefaultValue: 1000
+  AccessType:   rw
+  PDOMapping:   0
+
+Index:       0x1018 - Identity Object
+DataType:    UNSIGNED8
+ObjectCode:  Record
+Description: This objects contains the identity information of the device.
+
+  Sub:          0x00 - Number of entries
+  DataType:     UNSIGNED8
+  DefaultValue: 4
+  AccessType:   ro
+  PDOMapping:   0
+  Sub:          0x01 - Vendor Id
+  DataType:     UNSIGNED32
+  DefaultValue: 0x319
+  AccessType:   ro
+  PDOMapping:   0
+  Sub:          0x02 - Product Code
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0815
+  AccessType:   ro
+  PDOMapping:   0
+  Sub:          0x03 - Revision number
+  DataType:     UNSIGNED32
+  DefaultValue: 0x00010001
+  AccessType:   ro
+  PDOMapping:   0
+  Sub:          0x04 - Serial number
+  DataType:     UNSIGNED32
+  DefaultValue: 1
+  AccessType:   ro
+  PDOMapping:   0
+
+Index:       0x1019 - Synchronous counter overflow value
+DataType:    UNSIGNED8
+ObjectCode:  Variable
+Description: This object shall indicate the configured highest value the synchronous counter supports. This object shall be implemented by the producer and the consumer, if the synchronous counter is supported by the CANopen device. If the value is greater than 1, the SYNC message shall have a data length of 1 byte. The SYNC consumer shall ignore the value itself. 
+  Sub:          0x00 - Synchronous counter overflow value
+  DataType:     UNSIGNED8
+  DefaultValue: 0
+  AccessType:   rw
+  PDOMapping:   0
+
+Index:       0x1028 - Emergency Consumer
+DataType:    UNSIGNED32
+ObjectCode:  Array
+Description: This objects indicates the configured COB-IDs for the EMCY objects that the CANopen device is consuming.
+
+  Sub:          0x00 - Highest sub-index supported
+  DataType:     UNSIGNED8
+  DefaultValue: 3
+  AccessType:   const
+  PDOMapping:   0
+  Sub:          0x01 - EMCY Consumer 1
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0081
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x02 - EMCY Consumer 2
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0082
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x03 - EMCY Consumer 3
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0083
+  AccessType:   rw
+  PDOMapping:   0
+
+Index:       0x1200 - SDO server parameter
+DataType:    UNSIGNED8
+ObjectCode:  Record
+  Sub:          0x00 - Highest sub-index supported
+  DataType:     UNSIGNED8
+  DefaultValue: 2
+  AccessType:   const
+  PDOMapping:   0
+  Sub:          0x01 - COB-ID client to server
+  DataType:     UNSIGNED32
+  DefaultValue: $NODEID+0x600
+  AccessType:   const
+  PDOMapping:   0
+  Sub:          0x02 - COB-ID server to client
+  DataType:     UNSIGNED32
+  DefaultValue: $NODEID+0x580
+  AccessType:   ro
+  PDOMapping:   0
+
+Index:       0x1400 - Receive PDO Communication Parameter
+DataType:    UNSIGNED8
+ObjectCode:  Record
+Description: This object contains the communication parameters for the PDO the CANopen device is able to receive.
+
+  Sub:          0x00 - Highest sub-index supported
+  DataType:     UNSIGNED8
+  DefaultValue: 5
+  AccessType:   ro
+  PDOMapping:   0
+  Sub:          0x01 - COB ID
+  DataType:     UNSIGNED32
+  DefaultValue: $NODEID+0x200
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x02 - Transmission Type
+  DataType:     UNSIGNED8
+  DefaultValue: 254
+  AccessType:   rw
+  PDOMapping:   0
+  Description: Sub-index 0x2 defines the reception character of the RPDO. 
+  Sub:          0x03 - Inhibit Time
+  DataType:     UNSIGNED16
+  DefaultValue: 0
+  AccessType:   rw
+  PDOMapping:   0
+  Description: Sub-index 0x03 contains the inhibit time. The value is defined as multiple of 100 탎. The value of 0 shall disable the inhibit time. It is not allowed to change the value while the PDO exists (bit 31 of sub-index 01h is set to 0 b). 
+The RPDO may use the time implementation specific.
+
+  Sub:          0x05 - Event Timer
+  DataType:     UNSIGNED16
+  AccessType:   rw
+  PDOMapping:   0
+  Description: Sub-index 0x05 contains the event-timer. The value is defined as multiple of 1 ms. The value of 0 shall disable the event-timer. The RPDO may use the time for deadline monitoring. The deadline monitoring is activated within the next reception of an RPDO after configuring the event-timer. A timeout results in an indication to the local application.
+
+
+Index:       0x1401 - Receive PDO Communication Parameter
+DataType:    UNSIGNED8
+ObjectCode:  Record
+Description: This object contains the communication parameters for the PDO the CANopen device is able to receive.
+
+  Sub:          0x00 - Highest sub-index supported
+  DataType:     UNSIGNED8
+  DefaultValue: 5
+  AccessType:   ro
+  PDOMapping:   0
+  Sub:          0x01 - COB ID
+  DataType:     UNSIGNED32
+  DefaultValue: $NODEID+0x300
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x02 - Transmission Type
+  DataType:     UNSIGNED8
+  DefaultValue: 254
+  AccessType:   rw
+  PDOMapping:   0
+  Description: Sub-index 0x2 defines the reception character of the RPDO. 
+  Sub:          0x03 - Inhibit Time
+  DataType:     UNSIGNED16
+  DefaultValue: 0
+  AccessType:   rw
+  PDOMapping:   0
+  Description: Sub-index 0x03 contains the inhibit time. The value is defined as multiple of 100 탎. The value of 0 shall disable the inhibit time. It is not allowed to change the value while the PDO exists (bit 31 of sub-index 01h is set to 0 b). 
+The RPDO may use the time implementation specific.
+
+  Sub:          0x05 - Event Timer
+  DataType:     UNSIGNED16
+  AccessType:   rw
+  PDOMapping:   0
+  Description: Sub-index 0x05 contains the event-timer. The value is defined as multiple of 1 ms. The value of 0 shall disable the event-timer. The RPDO may use the time for deadline monitoring. The deadline monitoring is activated within the next reception of an RPDO after configuring the event-timer. A timeout results in an indication to the local application.
+
+
+Index:       0x1402 - Receive PDO Communication Parameter
+DataType:    UNSIGNED8
+ObjectCode:  Record
+Description: This object contains the communication parameters for the PDO the CANopen device is able to receive.
+
+  Sub:          0x00 - Highest sub-index supported
+  DataType:     UNSIGNED8
+  DefaultValue: 5
+  AccessType:   ro
+  PDOMapping:   0
+  Sub:          0x01 - COB ID
+  DataType:     UNSIGNED32
+  DefaultValue: $NODEID+0x400
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x02 - Transmission Type
+  DataType:     UNSIGNED8
+  DefaultValue: 254
+  AccessType:   rw
+  PDOMapping:   0
+  Description: Sub-index 0x2 defines the reception character of the RPDO. 
+  Sub:          0x03 - Inhibit Time
+  DataType:     UNSIGNED16
+  DefaultValue: 0
+  AccessType:   rw
+  PDOMapping:   0
+  Description: Sub-index 0x03 contains the inhibit time. The value is defined as multiple of 100 탎. The value of 0 shall disable the inhibit time. It is not allowed to change the value while the PDO exists (bit 31 of sub-index 01h is set to 0 b). 
+The RPDO may use the time implementation specific.
+
+  Sub:          0x05 - Event Timer
+  DataType:     UNSIGNED16
+  AccessType:   rw
+  PDOMapping:   0
+  Description: Sub-index 0x05 contains the event-timer. The value is defined as multiple of 1 ms. The value of 0 shall disable the event-timer. The RPDO may use the time for deadline monitoring. The deadline monitoring is activated within the next reception of an RPDO after configuring the event-timer. A timeout results in an indication to the local application.
+
+
+Index:       0x1403 - Receive PDO Communication Parameter
+DataType:    UNSIGNED8
+ObjectCode:  Record
+Description: This object contains the communication parameters for the PDO the CANopen device is able to receive.
+
+  Sub:          0x00 - Highest sub-index supported
+  DataType:     UNSIGNED8
+  DefaultValue: 5
+  AccessType:   ro
+  PDOMapping:   0
+  Sub:          0x01 - COB ID
+  DataType:     UNSIGNED32
+  DefaultValue: $NODEID+0x500
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x02 - Transmission Type
+  DataType:     UNSIGNED8
+  DefaultValue: 254
+  AccessType:   rw
+  PDOMapping:   0
+  Description: Sub-index 0x2 defines the reception character of the RPDO. 
+  Sub:          0x03 - Inhibit Time
+  DataType:     UNSIGNED16
+  DefaultValue: 0
+  AccessType:   rw
+  PDOMapping:   0
+  Description: Sub-index 0x03 contains the inhibit time. The value is defined as multiple of 100 탎. The value of 0 shall disable the inhibit time. It is not allowed to change the value while the PDO exists (bit 31 of sub-index 01h is set to 0 b). 
+The RPDO may use the time implementation specific.
+
+  Sub:          0x05 - Event Timer
+  DataType:     UNSIGNED16
+  AccessType:   rw
+  PDOMapping:   0
+  Description: Sub-index 0x05 contains the event-timer. The value is defined as multiple of 1 ms. The value of 0 shall disable the event-timer. The RPDO may use the time for deadline monitoring. The deadline monitoring is activated within the next reception of an RPDO after configuring the event-timer. A timeout results in an indication to the local application.
+
+
+Index:       0x1600 - Receive PDO Mapping Parameter
+DataType:    UNSIGNED8
+ObjectCode:  Record
+Description: This object contains the mapping parameters for the PDO the CANopen device is able to receive.
+
+  Sub:          0x00 - Highest sub-index supported
+  DataType:     UNSIGNED8
+  DefaultValue: 0
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x01 - Mapping Entry 1
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x02 - Mapping Entry 2
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x03 - Mapping Entry 3
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x04 - Mapping Entry 4
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x05 - Mapping Entry 5
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x06 - Mapping Entry 6
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x07 - Mapping Entry 7
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x08 - Mapping Entry 8
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+
+Index:       0x1601 - Receive PDO Mapping Parameter
+DataType:    UNSIGNED8
+ObjectCode:  Record
+Description: This object contains the mapping parameters for the PDO the CANopen device is able to receive.
+
+  Sub:          0x00 - Highest sub-index supported
+  DataType:     UNSIGNED8
+  DefaultValue: 0
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x01 - Mapping Entry 1
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x02 - Mapping Entry 2
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x03 - Mapping Entry 3
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x04 - Mapping Entry 4
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x05 - Mapping Entry 5
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x06 - Mapping Entry 6
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x07 - Mapping Entry 7
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x08 - Mapping Entry 8
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+
+Index:       0x1602 - Receive PDO Mapping Parameter
+DataType:    UNSIGNED8
+ObjectCode:  Record
+Description: This object contains the mapping parameters for the PDO the CANopen device is able to receive.
+
+  Sub:          0x00 - Highest sub-index supported
+  DataType:     UNSIGNED8
+  DefaultValue: 0
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x01 - Mapping Entry 1
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x02 - Mapping Entry 2
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x03 - Mapping Entry 3
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x04 - Mapping Entry 4
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x05 - Mapping Entry 5
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x06 - Mapping Entry 6
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x07 - Mapping Entry 7
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x08 - Mapping Entry 8
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+
+Index:       0x1603 - Receive PDO Mapping Parameter
+DataType:    UNSIGNED8
+ObjectCode:  Record
+Description: This object contains the mapping parameters for the PDO the CANopen device is able to receive.
+
+  Sub:          0x00 - Highest sub-index supported
+  DataType:     UNSIGNED8
+  DefaultValue: 0
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x01 - Mapping Entry 1
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x02 - Mapping Entry 2
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x03 - Mapping Entry 3
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x04 - Mapping Entry 4
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x05 - Mapping Entry 5
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x06 - Mapping Entry 6
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x07 - Mapping Entry 7
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x08 - Mapping Entry 8
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+
+Index:       0x1800 - Transmit PDO Communication Parameter
+DataType:    UNSIGNED8
+ObjectCode:  Record
+Description: This object contains the communication parameters for the PDO the CANopen device is able to transmit.
+
+  Sub:          0x00 - Highest sub-index supported
+  DataType:     UNSIGNED8
+  DefaultValue: 6
+  AccessType:   ro
+  PDOMapping:   0
+  Sub:          0x01 - COB ID
+  DataType:     UNSIGNED32
+  DefaultValue: $NODEID+0x80000180
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x02 - Transmission Type
+  DataType:     UNSIGNED8
+  DefaultValue: 254
+  AccessType:   rw
+  PDOMapping:   0
+  Description: Sub-index 0x2 defines the transmission type  of the TPDO. 
+0 .. synchronous (acyclic)
+1 .. synchronous (every SYNC)
+2 .. synchronous (every 2nd SYNC)
+240 .. synchronous (every 240th SYNC)
+
+254 .. event-driven (manufacturer-specific)
+255 .. event-driven (profile-specific)
+  Sub:          0x03 - Inhibit Time
+  DataType:     UNSIGNED16
+  DefaultValue: 0
+  AccessType:   rw
+  PDOMapping:   0
+  Description: Sub-index 0x03 contains the inhibit time. The time is the minimum interval for PDO
+transmission if the transmission type is set to FEh and FF h . The value is defined as multiple of 100 탎. The value of 0 shall disable the inhibit time. The value shall not be changed while the PDO exists (bit 31 of sub-index 01h is set to 0 b ).
+
+  Sub:          0x05 - Event Timer
+  DataType:     UNSIGNED16
+  AccessType:   rw
+  PDOMapping:   0
+  Description:  Sub-index 0x05 contains the event-timer. The time is the maximum interval for PDO
+transmission if the transmission type is set to 254 and 255 . The value is defined as multiple of 1 ms. The value of 0 shall disable the event-timer.
+
+  Sub:          0x06 - SYNC start value
+  DataType:     UNSIGNED8
+  AccessType:   rw
+  PDOMapping:   0
+  Description:  Sub-index 0x06 contains the SYNC start value. The SYNC start value of 0 shall indicate that  the counter of the SYNC message shall not be processed for this PDO. The SYNC start value 1 to 240 shall indicate that the counter of the SYNC message shall be processed for this PDO. In case the counter of the SYNC message is not enableds ub-index 0x06 shall be ignored.
+
+ The SYNC message of which the counter value equals the SYNC start value
+shall be regarded as the first received SYNC message. The value shall not be changed while the PDO exists (bit 31 of sub-index 01 h is set to 0 b ).
+
+
+Index:       0x1801 - Transmit PDO Communication Parameter
+DataType:    UNSIGNED8
+ObjectCode:  Record
+Description: This object contains the communication parameters for the PDO the CANopen device is able to transmit.
+
+  Sub:          0x00 - Highest sub-index supported
+  DataType:     UNSIGNED8
+  DefaultValue: 6
+  AccessType:   ro
+  PDOMapping:   0
+  Sub:          0x01 - COB ID
+  DataType:     UNSIGNED32
+  DefaultValue: $NODEID+0x80000280
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x02 - Transmission Type
+  DataType:     UNSIGNED8
+  DefaultValue: 254
+  AccessType:   rw
+  PDOMapping:   0
+  Description: Sub-index 0x2 defines the transmission type  of the TPDO. 
+0 .. synchronous (acyclic)
+1 .. synchronous (every SYNC)
+2 .. synchronous (every 2nd SYNC)
+240 .. synchronous (every 240th SYNC)
+
+254 .. event-driven (manufacturer-specific)
+255 .. event-driven (profile-specific)
+  Sub:          0x03 - Inhibit Time
+  DataType:     UNSIGNED16
+  DefaultValue: 0
+  AccessType:   rw
+  PDOMapping:   0
+  Description: Sub-index 0x03 contains the inhibit time. The time is the minimum interval for PDO
+transmission if the transmission type is set to FEh and FF h . The value is defined as multiple of 100 탎. The value of 0 shall disable the inhibit time. The value shall not be changed while the PDO exists (bit 31 of sub-index 01h is set to 0 b ).
+
+  Sub:          0x05 - Event Timer
+  DataType:     UNSIGNED16
+  AccessType:   rw
+  PDOMapping:   0
+  Description:  Sub-index 0x05 contains the event-timer. The time is the maximum interval for PDO
+transmission if the transmission type is set to 254 and 255 . The value is defined as multiple of 1 ms. The value of 0 shall disable the event-timer.
+
+  Sub:          0x06 - SYNC start value
+  DataType:     UNSIGNED8
+  AccessType:   rw
+  PDOMapping:   0
+  Description:  Sub-index 0x06 contains the SYNC start value. The SYNC start value of 0 shall indicate that  the counter of the SYNC message shall not be processed for this PDO. The SYNC start value 1 to 240 shall indicate that the counter of the SYNC message shall be processed for this PDO. In case the counter of the SYNC message is not enableds ub-index 0x06 shall be ignored.
+
+ The SYNC message of which the counter value equals the SYNC start value
+shall be regarded as the first received SYNC message. The value shall not be changed while the PDO exists (bit 31 of sub-index 01 h is set to 0 b ).
+
+
+Index:       0x1802 - Transmit PDO Communication Parameter
+DataType:    UNSIGNED8
+ObjectCode:  Record
+Description: This object contains the communication parameters for the PDO the CANopen device is able to transmit.
+
+  Sub:          0x00 - Highest sub-index supported
+  DataType:     UNSIGNED8
+  DefaultValue: 6
+  AccessType:   ro
+  PDOMapping:   0
+  Sub:          0x01 - COB ID
+  DataType:     UNSIGNED32
+  DefaultValue: $NODEID+0x80000380
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x02 - Transmission Type
+  DataType:     UNSIGNED8
+  DefaultValue: 254
+  AccessType:   rw
+  PDOMapping:   0
+  Description: Sub-index 0x2 defines the transmission type  of the TPDO. 
+0 .. synchronous (acyclic)
+1 .. synchronous (every SYNC)
+2 .. synchronous (every 2nd SYNC)
+240 .. synchronous (every 240th SYNC)
+
+254 .. event-driven (manufacturer-specific)
+255 .. event-driven (profile-specific)
+  Sub:          0x03 - Inhibit Time
+  DataType:     UNSIGNED16
+  DefaultValue: 0
+  AccessType:   rw
+  PDOMapping:   0
+  Description: Sub-index 0x03 contains the inhibit time. The time is the minimum interval for PDO
+transmission if the transmission type is set to FEh and FF h . The value is defined as multiple of 100 탎. The value of 0 shall disable the inhibit time. The value shall not be changed while the PDO exists (bit 31 of sub-index 01h is set to 0 b ).
+
+  Sub:          0x05 - Event Timer
+  DataType:     UNSIGNED16
+  AccessType:   rw
+  PDOMapping:   0
+  Description:  Sub-index 0x05 contains the event-timer. The time is the maximum interval for PDO
+transmission if the transmission type is set to 254 and 255 . The value is defined as multiple of 1 ms. The value of 0 shall disable the event-timer.
+
+  Sub:          0x06 - SYNC start value
+  DataType:     UNSIGNED8
+  AccessType:   rw
+  PDOMapping:   0
+  Description:  Sub-index 0x06 contains the SYNC start value. The SYNC start value of 0 shall indicate that  the counter of the SYNC message shall not be processed for this PDO. The SYNC start value 1 to 240 shall indicate that the counter of the SYNC message shall be processed for this PDO. In case the counter of the SYNC message is not enableds ub-index 0x06 shall be ignored.
+
+ The SYNC message of which the counter value equals the SYNC start value
+shall be regarded as the first received SYNC message. The value shall not be changed while the PDO exists (bit 31 of sub-index 01 h is set to 0 b ).
+
+
+Index:       0x1803 - Transmit PDO Communication Parameter
+DataType:    UNSIGNED8
+ObjectCode:  Record
+Description: This object contains the communication parameters for the PDO the CANopen device is able to transmit.
+
+  Sub:          0x00 - Highest sub-index supported
+  DataType:     UNSIGNED8
+  DefaultValue: 6
+  AccessType:   ro
+  PDOMapping:   0
+  Sub:          0x01 - COB ID
+  DataType:     UNSIGNED32
+  DefaultValue: $NODEID+0x80000480
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x02 - Transmission Type
+  DataType:     UNSIGNED8
+  DefaultValue: 254
+  AccessType:   rw
+  PDOMapping:   0
+  Description: Sub-index 0x2 defines the transmission type  of the TPDO. 
+0 .. synchronous (acyclic)
+1 .. synchronous (every SYNC)
+2 .. synchronous (every 2nd SYNC)
+240 .. synchronous (every 240th SYNC)
+
+254 .. event-driven (manufacturer-specific)
+255 .. event-driven (profile-specific)
+  Sub:          0x03 - Inhibit Time
+  DataType:     UNSIGNED16
+  DefaultValue: 0
+  AccessType:   rw
+  PDOMapping:   0
+  Description: Sub-index 0x03 contains the inhibit time. The time is the minimum interval for PDO
+transmission if the transmission type is set to FEh and FF h . The value is defined as multiple of 100 탎. The value of 0 shall disable the inhibit time. The value shall not be changed while the PDO exists (bit 31 of sub-index 01h is set to 0 b ).
+
+  Sub:          0x05 - Event Timer
+  DataType:     UNSIGNED16
+  AccessType:   rw
+  PDOMapping:   0
+  Description:  Sub-index 0x05 contains the event-timer. The time is the maximum interval for PDO
+transmission if the transmission type is set to 254 and 255 . The value is defined as multiple of 1 ms. The value of 0 shall disable the event-timer.
+
+  Sub:          0x06 - SYNC start value
+  DataType:     UNSIGNED8
+  AccessType:   rw
+  PDOMapping:   0
+  Description:  Sub-index 0x06 contains the SYNC start value. The SYNC start value of 0 shall indicate that  the counter of the SYNC message shall not be processed for this PDO. The SYNC start value 1 to 240 shall indicate that the counter of the SYNC message shall be processed for this PDO. In case the counter of the SYNC message is not enableds ub-index 0x06 shall be ignored.
+
+ The SYNC message of which the counter value equals the SYNC start value
+shall be regarded as the first received SYNC message. The value shall not be changed while the PDO exists (bit 31 of sub-index 01 h is set to 0 b ).
+
+
+Index:       0x1a00 - Transmit PDO Mapping Parameter
+DataType:    UNSIGNED8
+ObjectCode:  Record
+Description: This object contains the mapping for the PDO the device is able to transmit.
+
+  Sub:          0x00 - Highest sub-index supported
+  DataType:     UNSIGNED8
+  DefaultValue: 0
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x01 - Mapping Entry 1
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x02 - Mapping Entry 2
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x03 - Mapping Entry 3
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x04 - Mapping Entry 4
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x05 - Mapping Entry 5
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x06 - Mapping Entry 6
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x07 - Mapping Entry 7
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x08 - Mapping Entry 8
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+
+Index:       0x1a01 - Transmit PDO Mapping Parameter
+DataType:    UNSIGNED8
+ObjectCode:  Record
+Description: This object contains the mapping for the PDO the device is able to transmit.
+
+  Sub:          0x00 - Highest sub-index supported
+  DataType:     UNSIGNED8
+  DefaultValue: 0
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x01 - Mapping Entry 1
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x02 - Mapping Entry 2
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x03 - Mapping Entry 3
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x04 - Mapping Entry 4
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x05 - Mapping Entry 5
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x06 - Mapping Entry 6
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x07 - Mapping Entry 7
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x08 - Mapping Entry 8
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+
+Index:       0x1a02 - Transmit PDO Mapping Parameter
+DataType:    UNSIGNED8
+ObjectCode:  Record
+Description: This object contains the mapping for the PDO the device is able to transmit.
+
+  Sub:          0x00 - Highest sub-index supported
+  DataType:     UNSIGNED8
+  DefaultValue: 0
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x01 - Mapping Entry 1
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x02 - Mapping Entry 2
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x03 - Mapping Entry 3
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x04 - Mapping Entry 4
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x05 - Mapping Entry 5
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x06 - Mapping Entry 6
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x07 - Mapping Entry 7
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x08 - Mapping Entry 8
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+
+Index:       0x1a03 - Transmit PDO Mapping Parameter
+DataType:    UNSIGNED8
+ObjectCode:  Record
+Description: This object contains the mapping for the PDO the device is able to transmit.
+
+  Sub:          0x00 - Highest sub-index supported
+  DataType:     UNSIGNED8
+  DefaultValue: 0
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x01 - Mapping Entry 1
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x02 - Mapping Entry 2
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x03 - Mapping Entry 3
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x04 - Mapping Entry 4
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x05 - Mapping Entry 5
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x06 - Mapping Entry 6
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x07 - Mapping Entry 7
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+  Sub:          0x08 - Mapping Entry 8
+  DataType:     UNSIGNED32
+  DefaultValue: 0x0000
+  AccessType:   rw
+  PDOMapping:   0
+
+Index:       0x2000 - U8
+DataType:    UNSIGNED8
+ObjectCode:  Variable
+  Sub:          0x00 - U8
+  DataType:     UNSIGNED8
+  AccessType:   rw
+  PDOMapping:   1
+
+Index:       0x2001 - U16
+DataType:    UNSIGNED16
+ObjectCode:  Variable
+  Sub:          0x00 - U16
+  DataType:     UNSIGNED16
+  AccessType:   rw
+  PDOMapping:   1
+
+Index:       0x2002 - U32
+DataType:    UNSIGNED32
+ObjectCode:  Variable
+  Sub:          0x00 - U32
+  DataType:     UNSIGNED32
+  AccessType:   rw
+  PDOMapping:   1
+
+Index:       0x2003 - I8
+DataType:    INTEGER8
+ObjectCode:  Variable
+  Sub:          0x00 - I8
+  DataType:     INTEGER8
+  AccessType:   rw
+  PDOMapping:   1
+
+Index:       0x2004 - I16
+DataType:    INTEGER16
+ObjectCode:  Variable
+  Sub:          0x00 - I16
+  DataType:     INTEGER16
+  AccessType:   rw
+  PDOMapping:   1
+
+Index:       0x2005 - I32
+DataType:    INTEGER32
+ObjectCode:  Variable
+  Sub:          0x00 - I32
+  DataType:     INTEGER32
+  AccessType:   rw
+  PDOMapping:   1
+
+Index:       0x2006 - R32
+DataType:    REAL32
+ObjectCode:  Variable
+  Sub:          0x00 - R32
+  DataType:     REAL32
+  AccessType:   rw
+  PDOMapping:   1
