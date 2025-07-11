@@ -1,0 +1,5 @@
+# STM32H7-CORE STM32H743II
+
+![STM32H7-CORE.jpg][1]
+
+  [1]: images/STM32H7-CORE.jpg "STM32H7-CORE.jpg"
